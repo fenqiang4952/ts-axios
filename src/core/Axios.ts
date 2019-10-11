@@ -9,6 +9,7 @@ import {
 import dispatchRequest from './dispatchRequest'
 import InterceptorManager from './interceptorManager'
 import { deepMerge } from '../helpers/util'
+import mergeConfig from './mergeConfig'
 
 interface Interceptors {
   request: InterceptorManager<AxiosRequestConfig>
@@ -42,7 +43,7 @@ export default class Axios {
       config = url
     }
 
-    config = deepMerge(this.defaults, config)
+    config = mergeConfig(this.defaults, config)
 
     const chain: PromiseChain<any>[] = [
       {
