@@ -4,7 +4,6 @@ import { transformResponse } from '../helpers/data'
 import { createError } from '../helpers/error'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
-
   return new Promise((resolve, reject) => {
     const { data = null, url, method = 'get', headers, responseType, timeout = 60 * 1000 } = config
 
@@ -30,7 +29,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       const responseHeaders = parseHeaders(request.getAllResponseHeaders())
       const responseData = responseType !== 'text' ? request.response : request.responseText
       const response: AxiosResponse = {
-        data: transformResponse(responseData),
+        data: responseData,
         status: request.status,
         statusText: request.statusText,
         headers: responseHeaders,
@@ -62,7 +61,15 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       if (response.status >= 200 && response.status < 300) {
         resolve(response)
       } else {
-        reject(createError(`Request failed with status code ${response.status}`, config, null, request, response))
+        reject(
+          createError(
+            `Request failed with status code ${response.status}`,
+            config,
+            null,
+            request,
+            response
+          )
+        )
       }
     }
   })
