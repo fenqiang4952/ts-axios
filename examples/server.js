@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const webpack = require('webpack')
+const atob = require('atob')
 const cookieParser = require('cookie-parser')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
@@ -186,4 +187,18 @@ function registerMoreRouter() {
   router.get('/more/get', function(req, res) {
     res.json(req.cookies)
   })
+
+  router.post('/more/post',function(req,res) {
+    const auth = req.headers.authorization
+    const [type, credentials] = auth.split(' ')
+    console.log(atob(credentials))
+    const [username, password] = atob(credentials).split(':')
+    if (type === 'Basic' && username === 'strive' && password === '123456') {
+      res.json(req.body)
+    }else {
+      res.status(401)
+      res.end('UnAuthorization')
+    }
+  })
 }
+
