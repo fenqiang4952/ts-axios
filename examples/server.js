@@ -23,7 +23,13 @@ app.use(
 
 app.use(webpackHotMiddleware(compiler))
 
-app.use(express.static(__dirname))
+app.use(
+  express.static(__dirname, {
+    setHeaders(res) {
+      res.cookie('XSRF-TOKEN-D', '1234565677')
+    }
+  })
+)
 
 app.use(bodyParser.json())
 // app.use(bodyParser.text())
@@ -163,21 +169,21 @@ function registerConfigRouter() {
 }
 
 function registerCancelRouter() {
-  router.get('/cancel/get', function(req,res) {
+  router.get('/cancel/get', function(req, res) {
     setTimeout(() => {
       res.json('hello')
     }, 1000)
   })
 
-  router.post('/cancel/get', function(req,res) {
+  router.post('/cancel/get', function(req, res) {
     setTimeout(() => {
       res.json(req.body)
     }, 1000)
   })
 }
 
-function registerMoreRouter () {
-  router.get('/more/get', function(req,res) {
+function registerMoreRouter() {
+  router.get('/more/get', function(req, res) {
     res.json(req.cookies)
   })
 }
