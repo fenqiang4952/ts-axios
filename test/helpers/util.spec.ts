@@ -1,4 +1,11 @@
-import { isDate, isPlainObject, isFormData, extend, deepMerge } from '../../src/helpers/util'
+import {
+  isDate,
+  isPlainObject,
+  isFormData,
+  isURLSearchParams,
+  extend,
+  deepMerge
+} from '../../src/helpers/util'
 
 describe('helpers:util', () => {
   describe('isXX', () => {
@@ -15,6 +22,11 @@ describe('helpers:util', () => {
     test('should validate FormData', () => {
       expect(isFormData(new FormData())).toBeTruthy()
       expect(isFormData({})).toBeFalsy()
+    })
+
+    test('should validate URLSearchParams', () => {
+      expect(isURLSearchParams(new URLSearchParams())).toBeTruthy()
+      expect(isURLSearchParams({})).toBeFalsy()
     })
   })
 
