@@ -33,18 +33,25 @@ import axios from '../../src/index'
 //   console.log(res)
 // })
 
-axios.get('/more/304').then(res => {
-  console.log(res)
-}).catch(e => {
-  console.log(e.message)
+// axios.get('/more/304').then(res => {
+//   console.log(res)
+// }).catch(e => {
+//   console.log(e.message)
+// })
+
+// axios.get('/more/304', {
+//   validateStatus(status) {
+//     return status >= 200 && status < 400
+//   }
+// }).then(res => {
+//   console.log(res)
+// }).catch(e => {
+//   console.log(e.message)
+// })
+
+const instance = axios.create({
+  baseURL: '//img1.sycdn.imooc.com'
 })
 
-axios.get('/more/304', {
-  validateStatus(status) {
-    return status >= 200 && status < 400
-  }
-}).then(res => {
-  console.log(res)
-}).catch(e => {
-  console.log(e.message)
-})
+instance.get('/szimg/5d7f712909a0ab0f06000338.jpg')
+instance.get('//img1.sycdn.imooc.com/szimg/5da13cab09466e9105400306-360-202.jpg')
